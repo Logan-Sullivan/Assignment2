@@ -1,3 +1,67 @@
+/* Class Structures
+
+ * class Students
+    * Data:
+       String Student_ID;
+       String Student_Name;
+       int Test1;
+       int Test2;
+       int Test3;
+       double Percent;
+       char Grade;
+    * Functions:
+       public void PrintStudent();
+       public int compareTo(Students obj);
+ * end of Students
+
+ * class ArrayListManager
+    * Functions:
+       void addStudent(ArrayList<Students> Academic_Class, Students Obj)
+       void deleteStudent(ArrayList<Students> Academic_Class, String Student_ID)
+       void printClass(ArrayList<Students> Academic_Class)
+       void SortLarge(ArrayList<Students> x)
+ * end of ArrayListManager
+ * */
+
+/* Opening Statement
+
+* This program utilizes ArrayLists to arrange data for a class of students
+* the goals this program accomplishes is the following
+*
+* Loading records from input.txt loading each record into a student object
+*
+* Calc the %score and grade for that Student Object and place it into Academic_Class Arraylist
+*
+* list the records from input including %score and grades
+*
+* Delete students 42P4 and 45A3
+*
+* list the records again after they are dropped
+*
+* add new students to the Academic_Class arraylist
+*
+* calc grades and sort from lower to higher %score
+*
+* print the ArrayList one final time
+*
+* To complete these goals I created 2 classes being Students and ArrayListManager
+*
+* The Students class creates objects that store each individual students data
+* it also includes a function for printing a students data (PrintStudent)
+* and a function for comparing students %scores (compareTo)
+*
+* The ArrayListManager assists in all ArrayList tasks
+*
+* First the function addStudents adds students to the ArrayList
+*
+* then similarly the deleteStudent function removes students from the ArrayList using a Student_ID to find the student
+*
+* I also added a printClass function to loop through and print all students in the class
+*
+* Then the SortLarge function uses a bubble sort algorithm with the Students compareTo function to sort the class from highest to lowest %grade
+*
+* */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -5,58 +69,86 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        //create student ArrayList
+        ArrayList<Students> Academic_Class = new ArrayList<>();
+        //create arrayListManager
+        ArrayListManager arrayListManager = new ArrayListManager();
+
+        //regex that finds all commas and spaces for splitting later
+        String regex = "[, \\s]";
+        //Create File object
         File file = new File("src/input.txt");
+        // initialize iterator
         int linesRead = 0;
+        //open input file with scanner
         try (Scanner fileReader = new Scanner(file)){
             while (fileReader.hasNextLine()){
+                //scan a line and put string into text
                 String text = fileReader.nextLine();
+                //skip header line
                 if (linesRead > 0){
-                    Boolean StudentIDFound = false;
-                    Boolean NameFound = false;
-                    Boolean allTestsFound = false;
-                    String Student_ID = "";
-                    String Student_Name = "";
-                    String Temp = "";
-                    int[] tests = {0,0,0};
-                    int z = 0;
-                    for (int i = 0; i < text.length(); i++) {
-                        if (!StudentIDFound && (text.charAt(i) != ' ')){
-                            Student_ID += text.charAt(i);
-                        } else {
-                            StudentIDFound = true;
-                            if (!NameFound && !Character.isDigit(text.charAt(i))){
-                                if (text.charAt(i) != ','){
-                                    Student_Name += text.charAt(i);
-                                }
-                            } else {
-                                NameFound = true;
-                                    if (!allTestsFound){
-                                        if (text.charAt(i) == ' '){
-                                            tests[z] = Integer.parseInt(Temp);
-                                            z++;
-                                            if (z == 2){
-                                                allTestsFound = true;
-                                            }
-                                        } else {
-                                            Temp += text.charAt(i);
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                }
-                
+                    //Create an array of words splitting at every comma and space
+                    String[] formattedText = text.split(regex);
+                    //first in the array is always the id
+                    String ID = formattedText[0];
+                    //the last 3 elements are always the test scores
+                    int test1 = Integer.parseInt(formattedText[formattedText.length-1]);
+                    int test2 = Integer.parseInt(formattedText[formattedText.length-2]);
+                    int test3 = Integer.parseInt(formattedText[formattedText.length-3]);
+                    //initialize name var with first name and a space for formatting
+                    String name = formattedText[1] + " ";
+
+                    //start at 2nd in array cause first is id and end before last 3 as they are always test scores
+                    for (int i = 2; i < formattedText.length-3; i++){
+                        //add text to name var
+                        name += formattedText[i];
+                    }// end string reading loop
+
+                    //add new Students object to Academic_Class with data from read line
+                    arrayListManager.addStudent(Academic_Class, new Students(ID, name, test1, test2, test3)); // add newStudent to Academic_Class ArrayList with Manager
+                }//end linesRead if statement
+
+                //iterate lines read
                 linesRead++;
-            }
+            } //end file reader loop
+
+        //check that file actually exists
         } catch (FileNotFoundException e){
             System.out.println("File not found");
-        }
-        for (int i = 0; i < 1; i++) {
+        }//end try catch
 
-        }
+        System.out.println("\nbefore any changes");
+        //print class
+        arrayListManager.printClass(Academic_Class);
+
+        //remove students 42P4 and 45A3
+        arrayListManager.deleteStudent(Academic_Class, "42P4");
+        arrayListManager.deleteStudent(Academic_Class, "45A3");
+        System.out.println("\nAfter removing students");
+
+        //print class again
+        arrayListManager.printClass(Academic_Class);
+
+        //add new students
+        arrayListManager.addStudent(Academic_Class, new Students("67T4", "Clouse B", 80,75,98));
+        arrayListManager.addStudent(Academic_Class, new Students("45P5", "Garrison J", 75,78,72));
+        arrayListManager.addStudent(Academic_Class, new Students("89P0", "Singer A", 85,95,99));
+
+        System.out.println("\nAfter adding students");
+        //print again
+        arrayListManager.printClass(Academic_Class);
+
+        //sort by %score
+        arrayListManager.SortLarge(Academic_Class);
+
+        System.out.println("\nAfter sorting students");
+        //print again
+        arrayListManager.printClass(Academic_Class);
     }
-}
-class Student{
+}//end of main
+class Students{
+    //initialize vars
     String Student_ID;
     String Student_Name;
     int Test1;
@@ -65,13 +157,17 @@ class Student{
     double Percent;
     char Grade;
 
-    public Student(String Student_ID, String Student_Name, int Test1, int Test2, int Test3){
+    //constructor
+    public Students(String Student_ID, String Student_Name, int Test1, int Test2, int Test3){
+        //apply assigned vars
         this.Student_ID = Student_ID;
         this.Student_Name = Student_Name;
         this.Test1 = Test1;
         this.Test2 = Test2;
         this.Test3 = Test3;
+        //calc Percent
         this.Percent = ((Test1+Test2+Test3)/3.0);
+        //find letter grade
         if (this.Percent >= 90){
             this.Grade = 'A';
         } else if (this.Percent >= 80) {
@@ -84,43 +180,66 @@ class Student{
             this.Grade = 'F';
         }
     }
+
+    //default print statement using printf for formatting
     public void PrintStudent(){
-        System.out.printf("ID: %s\nName: %s\nTest1: %n\nTest2: %n\nTest3: %n\nPercent: %%%.2f%n\nGrade: %C",this.Student_ID, this.Student_Name, this.Test1, this.Test2, this.Test3,this.Percent, this.Grade);
-    }
-}
+        System.out.printf("%s, %s, %d, %d, %d, %.2f%%, %C\n",this.Student_ID, this.Student_Name, this.Test1, this.Test2, this.Test3,this.Percent, this.Grade);
+    }//end of PrintStudent
 
+    public int compareTo(Students obj){
+        //if Student calling method is smaller return 1 else return 0
+        if(this.Percent < obj.Percent){
+            return 1;
+        }
+        return 0;
+    }//end of compareTo
 
-/* Driver Program
-*
-* Load records from input.txt loading each record into a student object
-* Calc the %score and grade for that Student Object Then place it into Academic_Class Arraylist
-*
-* list the records from input including %score and grades
-*
-* Delete students 42P4 and 45A3
-*
-* list the records again after they are dropped
-*
-* add new students to arraylist
-*
-* calc grades and sort from lower to higher %score
-*
-* print ArrayList
-*
-*
-* */
+}//end of Students
 
+class ArrayListManager{
+    //adds student object to ArrayList
+    void addStudent(ArrayList<Students> Academic_Class, Students Obj){
+        Academic_Class.add(Obj);
+    }//end of addStudent
+    //removes student object from ArrayList
+    void deleteStudent(ArrayList<Students> Academic_Class, String Student_ID){
+        for (int i = 0; i < Academic_Class.size(); i++){
+            if (Student_ID.equals(Academic_Class.get(i).Student_ID)){
+                Academic_Class.remove(i);
+            }
+        }//end of for loop
+    }//end of deleteStudent
+    //Prints a header and loops through ArrayList to print all students within
+    void printClass(ArrayList<Students> Academic_Class){
+        //print a header
+        System.out.println("\nStudent_ID Student_Name Test1 Test2 Test3 Avg Grade");
+        //for each element in Academic_Class print the student
+        for (Students academicClass : Academic_Class) {
+            academicClass.PrintStudent();
+        }//end of for loop
+    }//end of PrintClass
 
+    // bubble sorts students in ArrayList from highest to lowest %grade
+    void SortLarge(ArrayList<Students> x){
+        //default that something has switched
+        boolean switched = true;
+        //initialize temp var
+        Students temp;
 
-/* Req Functions:
-* void AddStudent(Arraylist, Academic_Class, Student Obj)
-* adds students to/from arraylist
-*
-* void DeleteStudent(Arraylist Academic_Class, String StudentID)
-* Deletes student from arraylist with StudentID
-*
-* void SortLarge(Arraylist Academic_Class)
-* bubble sort arraylist larger to smaller based on %score
-*
-*
-* */
+        while (switched){
+            //make switched false so that if nothing switches while loop ends
+            switched = false;
+
+            //iterate through ArrayList and use compareTo to compare students %scores
+            for (int i = 0; i < x.size()-1; i++){
+                //if student i in ArrayList's %score is less than student i+1 swap the students in the ArrayList and set switched to true
+                if (x.get(i).compareTo(x.get(i + 1)) == 1) {
+                    temp = x.get(i);
+                    x.set(i, x.get(i + 1));
+                    x.set(i + 1, temp);
+                    switched = true;
+                }
+            }//end of for loop
+        }//end of while loop
+    }//end of SortLarge
+}//end of ArrayListManager
