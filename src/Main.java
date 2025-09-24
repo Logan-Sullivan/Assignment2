@@ -7,6 +7,11 @@
        int Test1;
        int Test2;
        int Test3;
+       int Total_Hr;
+       int Class_GP;
+       double GPA;
+       double Cumulative_GPA;
+       String Year_Rank;
        double Percent;
        char Grade;
     * Functions:
@@ -22,6 +27,19 @@
        void SortLarge(ArrayList<Students> x)
  * end of ArrayListManager
  * */
+
+/* New Additions for Part 2
+*  Edited the file reader to get the GPA and Total Hr from new input file and change the
+*  indexes of tests and end of name
+*
+* Edited added students to include Tota_Hr and GPA
+*
+* Added new variables (Total_Hr, Class_GP, GPA, Cumulative_GPA, and Year_Rank) to Students class and constructor
+* Added Year rank based on Total_Hr to Students class
+* Added calculation of new gpa to Students class
+*
+* Finally edit the printout to include new vars
+* */
 
 /* Opening Statement
 
@@ -54,11 +72,13 @@
  *
  * First the function addStudents adds students to the ArrayList
  *
- * then similarly the deleteStudent function removes students from the ArrayList using a Student_ID to find the student
+ * then similarly the deleteStudent function removes students from the ArrayList using a Student_ID to find
+ * the student
  *
  * I also added a printClass function to loop through and print all students in the class
  *
- * Then the SortLarge function uses a bubble sort algorithm with the Students compareTo function to sort the class from highest to lowest %grade
+ * Then the SortLarge function uses a bubble sort algorithm with the Students compareTo function to sort the
+ * class from highest to lowest %grade
  *
  * */
 
@@ -128,8 +148,8 @@ public class Main {
         //remove students 42P4 and 45A3
         arrayListManager.deleteStudent(Academic_Class, "42P4");
         arrayListManager.deleteStudent(Academic_Class, "45A3");
-        System.out.println("\nAfter removing students");
 
+        System.out.println("\nAfter removing students");
         //print class again
         arrayListManager.printClass(Academic_Class);
 
@@ -190,7 +210,7 @@ class Students{
             this.Year_Rank = "SR";
         }
 
-            //find letter grade and get Class_GP
+        //find letter grade and get Class_GP
         if (this.Percent >= 90){
             this.Grade = 'A';
             this.Class_GP = 4;
@@ -207,6 +227,7 @@ class Students{
             this.Grade = 'F';
             this.Class_GP = 0;
         }
+
         //calc Cumulative_GPA with found Class_GP
         this.Cumulative_GPA = ((this.GPA*this.Total_Hr)+(2)*this.Class_GP)/(this.Total_Hr+2);
     }
