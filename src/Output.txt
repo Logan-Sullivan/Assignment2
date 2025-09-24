@@ -1,0 +1,50 @@
+Output:
+before any changes
+
+Student_ID Student_Name Year_Rank Test1 Test2 Test3 Avg Grade Total_Hours Old_GPA Cumulative_GPA
+45A3, Jones HA, SR, 95, 88, 86, 89.67%, B, 98, 3.42, 3.41
+34K5, Horner M, FR, 23, 75, 67, 55.00%, F, 17, 1.95, 1.74
+56J8, Gach TA, SO, 90, 85, 75, 83.33%, B, 60, 3.75, 3.73
+34U8, Hunter C, JR, 75, 50, 100, 75.00%, C, 75, 2.60, 2.58
+42P4, Hinrichs S, SO, 65, 75, 85, 75.00%, C, 52, 3.29, 3.24
+78T6, Johnson K, FR, 89, 78, 80, 82.33%, B, 15, 2.00, 2.12
+44L2, Levitte H, SR, 99, 66, 56, 73.67%, C, 100, 2.35, 2.34
+88I9, Garner J, SR, 98, 92, 95, 95.00%, A, 110, 3.89, 3.89
+
+After removing students
+
+Student_ID Student_Name Year_Rank Test1 Test2 Test3 Avg Grade Total_Hours Old_GPA Cumulative_GPA
+34K5, Horner M, FR, 23, 75, 67, 55.00%, F, 17, 1.95, 1.74
+56J8, Gach TA, SO, 90, 85, 75, 83.33%, B, 60, 3.75, 3.73
+34U8, Hunter C, JR, 75, 50, 100, 75.00%, C, 75, 2.60, 2.58
+78T6, Johnson K, FR, 89, 78, 80, 82.33%, B, 15, 2.00, 2.12
+44L2, Levitte H, SR, 99, 66, 56, 73.67%, C, 100, 2.35, 2.34
+88I9, Garner J, SR, 98, 92, 95, 95.00%, A, 110, 3.89, 3.89
+
+After adding students
+
+Student_ID Student_Name Year_Rank Test1 Test2 Test3 Avg Grade Total_Hours Old_GPA Cumulative_GPA
+34K5, Horner M, FR, 23, 75, 67, 55.00%, F, 17, 1.95, 1.74
+56J8, Gach TA, SO, 90, 85, 75, 83.33%, B, 60, 3.75, 3.73
+34U8, Hunter C, JR, 75, 50, 100, 75.00%, C, 75, 2.60, 2.58
+78T6, Johnson K, FR, 89, 78, 80, 82.33%, B, 15, 2.00, 2.12
+44L2, Levitte H, SR, 99, 66, 56, 73.67%, C, 100, 2.35, 2.34
+88I9, Garner J, SR, 98, 92, 95, 95.00%, A, 110, 3.89, 3.89
+67T4, Clouse B, SR, 80, 75, 98, 84.33%, B, 102, 3.65, 3.64
+45P5, Garrison J, SO, 75, 78, 72, 75.00%, C, 39, 1.85, 1.86
+89P0, Singer A, SR, 85, 95, 99, 93.00%, A, 130, 3.87, 3.87
+
+After sorting students
+
+Student_ID Student_Name Year_Rank Test1 Test2 Test3 Avg Grade Total_Hours Old_GPA Cumulative_GPA
+88I9, Garner J, SR, 98, 92, 95, 95.00%, A, 110, 3.89, 3.89
+89P0, Singer A, SR, 85, 95, 99, 93.00%, A, 130, 3.87, 3.87
+67T4, Clouse B, SR, 80, 75, 98, 84.33%, B, 102, 3.65, 3.64
+56J8, Gach TA, SO, 90, 85, 75, 83.33%, B, 60, 3.75, 3.73
+78T6, Johnson K, FR, 89, 78, 80, 82.33%, B, 15, 2.00, 2.12
+34U8, Hunter C, JR, 75, 50, 100, 75.00%, C, 75, 2.60, 2.58
+45P5, Garrison J, SO, 75, 78, 72, 75.00%, C, 39, 1.85, 1.86
+44L2, Levitte H, SR, 99, 66, 56, 73.67%, C, 100, 2.35, 2.34
+34K5, Horner M, FR, 23, 75, 67, 55.00%, F, 17, 1.95, 1.74
+
+Process finished with exit code 0
