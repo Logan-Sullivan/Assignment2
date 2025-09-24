@@ -1,4 +1,4 @@
-Student_ID Student_Name Test1 Test2 Test3
+Student_ID Student_Name Test1 Test2 Test3 Total HR GPA
 45A3 Jones, H A 86 88 95
 34K5 Horner, M 67 75 23
 56J8 Gach, T A 75 85 90
